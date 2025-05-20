@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chroniona strona</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-color: #f2f2f2;
+    }
+    input {
+      padding: 10px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Wprowadź hasło, aby kontynuować</h1>
+  <input type="password" id="haslo" placeholder="Hasło">
+  <br>
+  <button onclick="sprawdzHaslo()">Wejdź</button>
+
+  <p id="komunikat" style="color: red; margin-top: 20px;"></p>
+
+  <script>
+    function sprawdzHaslo() {
+      const haslo = document.getElementById("haslo").value;
+      const poprawneHaslo = "tajne123";
+      const przekierowanie = "https://i.imgur.com/ZAB2KLh.png";
+
+      if (haslo === poprawneHaslo) {
+        window.location.href = przekierowanie;
+      } else {
+        document.getElementById("komunikat").innerText = "Błędne hasło!";
+      }
+    }
+  </script>
+</body>
+</html>
