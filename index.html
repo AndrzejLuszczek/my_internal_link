@@ -1,47 +1,231 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Chroniona strona</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protected Page</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding-top: 100px;
-      background-color: #f2f2f2;
+      min-width: 300px;
     }
+    
+    h1 {
+      color: white;
+      margin-bottom: 30px;
+      font-size: 1.8em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
     input {
-      padding: 10px;
+      padding: 15px 20px;
       font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      width: 250px;
+      max-width: 90%;
+      margin-bottom: 20px;
+      outline: none;
+      text-align: center;
     }
+    
     button {
-      padding: 10px 20px;
+      padding: 15px 30px;
       font-size: 1rem;
-      margin-top: 10px;
+      border: none;
+      border-radius: 25px;
+      background: #ff6b6b;
+      color: white;
       cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 120px;
+    }
+    
+    button:hover {
+      background: #ff5252;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    #komunikat {
+      color: #ffcccb;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+    
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .photo-item {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .photo-item:hover {
+      transform: scale(1.02);
+    }
+    
+    .photo-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .photo-caption {
+      padding: 15px;
+      color: white;
+      text-align: center;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+    }
+    
+    .modal-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+    }
+    
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+    
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    
+    .close:hover {
+      color: #ff6b6b;
     }
   </style>
 </head>
 <body>
-  <h1>Enter the password to continue</h1>
-  <input type="password" id="haslo" placeholder="Hasło">
-  <br>
-  <button onclick="sprawdzHaslo()">Wejdź</button>
-
-  <p id="komunikat" style="color: red; margin-top: 20px;"></p>
+  <div class="container">
+    <!-- Login Form -->
+    <div id="loginForm">
+      <h1>🔐 Enter Password to Continue</h1>
+      <input type="password" id="haslo" placeholder="Enter password...">
+      <br>
+      <button onclick="sprawdzHaslo()">Access</button>
+      <p id="komunikat"></p>
+    </div>
+    
+    <!-- Gallery (hidden initially) -->
+    <div id="gallery" class="hidden">
+      <h1>📸 My Photos</h1>
+      
+      <div class="gallery">
+        <!-- WKLEJ TUTAJ SWOJE PRAWDZIWE LINKI CLOUDINARY -->
+        <div class="photo-item" onclick="showModal('LINK_DO_ZDJECIA_1')">
+          <img src="LINK_DO_ZDJECIA_1" alt="Photo 1" onerror="this.parentElement.style.display='none'">
+          <div class="photo-caption">Photo 1</div>
+        </div>
+        
+        <div class="photo-item" onclick="showModal('LINK_DO_ZDJECIA_2')">
+          <img src="LINK_DO_ZDJECIA_2" alt="Photo 2" onerror="this.parentElement.style.display='none'">
+          <div class="photo-caption">Photo 2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div id="photoModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+      <img id="modalImg" src="" alt="Enlarged photo">
+    </div>
+  </div>
 
   <script>
     function sprawdzHaslo() {
       const haslo = document.getElementById("haslo").value;
-      const poprawneHaslo = "tajne123";
-      const przekierowanie = "https://i.imgur.com/c503M4G.png";
-
+      const poprawneHaslo = "London2025"; // Password set to London2025
+      
       if (haslo === poprawneHaslo) {
-        window.location.href = przekierowanie;
+        // Hide login form and show gallery
+        document.getElementById("loginForm").classList.add("hidden");
+        document.getElementById("gallery").classList.remove("hidden");
       } else {
-        document.getElementById("komunikat").innerText = "Błędne hasło!";
+        document.getElementById("komunikat").innerText = "Incorrect password!";
       }
     }
+    
+    function showModal(imageSrc) {
+      document.getElementById('modalImg').src = imageSrc;
+      document.getElementById('photoModal').style.display = 'block';
+    }
+    
+    function closeModal() {
+      document.getElementById('photoModal').style.display = 'none';
+    }
+    
+    // Close modal on outside click
+    document.getElementById('photoModal').onclick = function(event) {
+      if (event.target === this) {
+        closeModal();
+      }
+    }
+    
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+    
+    // Enter key in password field
+    document.getElementById('haslo').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sprawdzHaslo();
+      }
+    });
   </script>
 </body>
 </html>
