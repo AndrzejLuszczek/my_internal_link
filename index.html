@@ -293,6 +293,11 @@
             <div class="photo-caption">Garden View</div>
           </div>
           
+          <div class="photo-item" onclick="showModal('https://res.cloudinary.com/dhoheen6w/image/upload/v1751820024/20250706_144822_qscw7b.jpg')">
+            <img src="https://res.cloudinary.com/dhoheen6w/image/upload/v1751820024/20250706_144822_qscw7b.jpg" alt="Paving Stones" onerror="this.parentElement.style.display='none'">
+            <div class="photo-caption">Paving Stones</div>
+          </div>
+          
           <!-- Dodaj więcej zdjęć ogrodu tutaj -->
         </div>
       </div>
@@ -335,7 +340,7 @@
   <script>
     function sprawdzHaslo() {
       const haslo = document.getElementById("haslo").value;
-      const poprawneHaslo = "Home225";
+      const poprawneHaslo = "London2025";
       
       if (haslo === poprawneHaslo) {
         document.getElementById("loginForm").classList.add("hidden");
